@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Npgsql;
 
 namespace Knapcode.PoGoNotifications.Controllers
 {
@@ -80,8 +81,16 @@ namespace Knapcode.PoGoNotifications.Controllers
             {
                 _logger.LogInformation("New encounter {encounterId}.", encounter.EncounterId);
 
-                _notificationContext.PokemonEncounters.Add(encounter);
-                await _notificationContext.SaveChangesAsync();
+                try
+                {
+                    _notificationContext.PokemonEncounters.Add(encounter);
+                    await _notificationContext.SaveChangesAsync();
+                }
+                catch (DbUpdateException exception) when (IsDuplicateException(exception))
+                {
+                    _logger.LogInformation("Duplicate encounter {encounterId} found after inserting.", encounter.EncounterId);
+                    return;
+                }
 
                 var name = _pokedexContext
                      .PokemonSpeciesNames
@@ -100,8 +109,19 @@ namespace Knapcode.PoGoNotifications.Controllers
             }
             else
             {
-                _logger.LogInformation("Duplicate encounter {encounterId}.", encounter.EncounterId);
+                _logger.LogInformation("Duplicate encounter {encounterId} found before inserting.", encounter.EncounterId);
             }
+        }
+
+        private bool IsDuplicateException(DbUpdateException exception)
+        {
+            var postgresException = exception.InnerException as PostgresException;
+            if (postgresException == null)
+            {
+                return false;
+            }
+
+            return postgresException.SqlState == "23505";
         }
 
         private string GetMapUrl(int pokemonId, double latitude, double longitude)
