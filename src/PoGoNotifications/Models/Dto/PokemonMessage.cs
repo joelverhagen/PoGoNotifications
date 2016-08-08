@@ -21,5 +21,8 @@ namespace Knapcode.PoGoNotifications.Models.WebHook
 
         [JsonProperty("encounter_id")]
         public string EncounterId { get; set; }
+
+        [JsonProperty("is_lured")]
+        public bool IsLured { get; set; }
     }
 }

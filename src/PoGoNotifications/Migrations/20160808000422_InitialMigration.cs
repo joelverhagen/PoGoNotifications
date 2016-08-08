@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace WebHookTester.Migrations
+namespace Knapcode.PoGoNotifications.Migrations
 {
     public partial class InitialMigration : Migration
     {
@@ -14,14 +14,15 @@ namespace WebHookTester.Migrations
                 {
                     EncounterId = table.Column<string>(nullable: false),
                     DisappearTime = table.Column<DateTimeOffset>(nullable: false),
-                    SpawnpointId = table.Column<string>(nullable: false),
+                    SpawnpointId = table.Column<string>(nullable: true),
                     PokemonId = table.Column<int>(nullable: false),
+                    IsLured = table.Column<bool>(nullable: false),
                     Latitude = table.Column<double>(nullable: false),
                     Longitude = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PokemonEncounters", x => new { x.EncounterId, x.DisappearTime, x.SpawnpointId, x.PokemonId });
+                    table.PrimaryKey("PK_PokemonEncounters", x => new { x.EncounterId, x.DisappearTime });
                 });
         }
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Knapcode.PoGoNotifications.Models;
 
-namespace WebHookTester.Migrations
+namespace Knapcode.PoGoNotifications.Migrations
 {
     [DbContext(typeof(NotificationContext))]
     partial class NotificationContextModelSnapshot : ModelSnapshot
@@ -24,6 +24,8 @@ namespace WebHookTester.Migrations
                     b.Property<string>("SpawnpointId");
 
                     b.Property<int>("PokemonId");
+
+                    b.Property<bool>("IsLured");
 
                     b.Property<double>("Latitude");
 

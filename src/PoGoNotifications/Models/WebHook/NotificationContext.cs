@@ -13,7 +13,11 @@ namespace Knapcode.PoGoNotifications.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PokemonEncounter>()
-                .HasKey(x => new { x.EncounterId, x.DisappearTime, x.SpawnpointId, x.PokemonId });
+                .Property(x => x.SpawnpointId)
+                .IsRequired(false);
+
+            modelBuilder.Entity<PokemonEncounter>()
+                .HasKey(x => new { x.EncounterId, x.DisappearTime });
         }
     }
 }

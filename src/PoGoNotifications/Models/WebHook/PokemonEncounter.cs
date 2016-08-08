@@ -10,5 +10,6 @@ namespace Knapcode.PoGoNotifications.Models
         public DateTimeOffset DisappearTime { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        public bool IsLured { get; set; }
     }
 }

@@ -68,14 +68,13 @@ namespace Knapcode.PoGoNotifications.Controllers
                 SpawnpointId = body.Message.SpawnpointId,
                 PokemonId = body.Message.PokemonId,
                 Latitude = body.Message.Latitude,
-                Longitude = body.Message.Longitude
+                Longitude = body.Message.Longitude,
+                IsLured = body.Message.IsLured
             };
 
             var existing = _notificationContext.PokemonEncounters.FirstOrDefault(x =>
                 x.EncounterId == encounter.EncounterId &&
-                x.DisappearTime == encounter.DisappearTime &&
-                x.SpawnpointId == encounter.SpawnpointId &&
-                x.PokemonId == encounter.PokemonId);
+                x.DisappearTime == encounter.DisappearTime);
 
             if (existing == null)
             {
