@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Knapcode.PoGoNotifications.Models;
@@ -74,6 +75,13 @@ namespace Knapcode.PoGoNotifications.Logic
             if (IsIgnored(encounter))
             {
                 _logger.LogInformation("Encounter {encounterId} (pokemon {pokemonId}) is ignored.", encounter.EncounterId, encounter.PokemonId);
+                return;
+            }
+
+            var disappearsIn = encounter.DisappearTime - DateTimeOffset.Now;
+            if (disappearsIn < TimeSpan.FromMinutes(1))
+            {
+                _logger.LogInformation("Encounter {encounterId} is too soon and therefore ignored.", encounter.EncounterId, encounter.PokemonId);
                 return;
             }
 

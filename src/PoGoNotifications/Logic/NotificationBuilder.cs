@@ -32,8 +32,9 @@ namespace Knapcode.PoGoNotifications.Logic
             var name = nameRecord.Name;
 
             var disappearsIn = encounter.DisappearTime - DateTimeOffset.Now;
+            var disappearTime = encounter.DisappearTime.ToLocalTime().ToString("h:mm tt");
             var minutes = (int)disappearsIn.TotalMinutes;
-            var text = $"A wild {name} has appeared! It disappears in {minutes} minute{(minutes != 1 ? "s" : string.Empty)}.";
+            var text = $"A wild {name} has appeared! It disappears at {disappearTime} ({minutes} minute{(minutes != 1 ? "s" : string.Empty)} from now).";
 
             var mapUrl = GetMapUrl(encounter.PokemonId, encounter.Latitude, encounter.Longitude);
 
