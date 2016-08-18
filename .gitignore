@@ -253,4 +253,4 @@ paket-files/
 *.sln.iml
 
 # Ignore the secrets file
-appsettings.secret.json
+*.secret.json
