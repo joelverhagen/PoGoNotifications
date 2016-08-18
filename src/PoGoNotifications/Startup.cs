@@ -1,4 +1,8 @@
-﻿using Knapcode.PoGoNotifications.Models;
+﻿using System.Net;
+using System.Net.Http;
+using Knapcode.GroupMe;
+using Knapcode.PoGoNotifications.Logic;
+using Knapcode.PoGoNotifications.Models;
 using Knapcode.PoGoNotifications.Models.Pokedex;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Knapcode.PoGoNotifications
 {
@@ -34,6 +39,36 @@ namespace Knapcode.PoGoNotifications
             services.AddDbContext<pokedexContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PokedexContext")));
             services.AddDbContext<NotificationContext>(options => options.UseNpgsql(Configuration.GetConnectionString("NotificationContext")));
 
+            {
+                var httpClientHandler = new HttpClientHandler
+                {
+                    AllowAutoRedirect = true,
+                    AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+                };
+                var httpClient = new HttpClient(httpClientHandler);
+                services.AddSingleton(httpClient);
+            }
+
+            services.AddTransient<IImageService, ImageService>(x =>
+            {
+                var options = x.GetService<IOptions<NotificationOptions>>();
+                var accessToken = options.Value.GroupMeOptions.AccessToken;
+                var httpClient = x.GetService<HttpClient>();
+                return new ImageService(accessToken, httpClient);
+            });
+
+            services.AddTransient<IBotService, BotService>(x =>
+            {
+                var options = x.GetService<IOptions<NotificationOptions>>();
+                var accessToken = options.Value.GroupMeOptions.AccessToken;
+                var httpClient = x.GetService<HttpClient>();
+                return new BotService(accessToken, httpClient);
+            });
+            
+            services.AddTransient<INotificationService, GroupMeNotificationService>();
+            services.AddTransient<INotificationBuilder, NotificationBuilder>();
+            services.AddTransient<IPokemonEncounterService, PokemonEncounterService>();
+                
             services.AddMvc();
         }
 
