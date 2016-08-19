@@ -2,6 +2,8 @@
 {
     public enum WebHookMessageType
     {
-        Pokemon
+        Pokemon,
+        Pokestop,
+        Gym
     }
 }

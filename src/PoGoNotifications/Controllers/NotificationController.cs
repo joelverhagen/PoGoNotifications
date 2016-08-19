@@ -5,6 +5,7 @@ using Knapcode.PoGoNotifications.Logic;
 using Knapcode.PoGoNotifications.Models;
 using Knapcode.PoGoNotifications.Models.WebHook;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace Knapcode.PoGoNotifications.Controllers
 {
@@ -30,6 +31,11 @@ namespace Knapcode.PoGoNotifications.Controllers
         public async Task Post([FromBody]PokemonWebHookMessage body)
         {
             if (!ModelState.IsValid)
+            {
+                return;
+            }
+
+            if (body.Type != WebHookMessageType.Pokemon)
             {
                 return;
             }
