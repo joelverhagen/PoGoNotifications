@@ -15,36 +15,24 @@ namespace Knapcode.PoGoNotifications.Logic
         private readonly IOptions<NotificationOptions> _options;
         private readonly NotificationContext _notificationContext;
         private readonly ILogger<PokemonEncounterService> _logger;
-        private readonly Polygon _polygon;
-        private readonly HashSet<int> _ignoredPokemonIds;
         private readonly INotificationBuilder _notificationBuilder;
         private readonly INotificationService _notificationService;
+        private readonly IIgnoredPokemonService _ignoredPokemonService;
 
         public PokemonEncounterService(
             ILogger<PokemonEncounterService> logger,
             IOptions<NotificationOptions> options,
+            IIgnoredPokemonService ignoredPokemonService,
             INotificationBuilder notificationBuilder,
             INotificationService notificationService,
             NotificationContext notificationContext)
         {
             _logger = logger;
             _options = options;
+            _ignoredPokemonService = ignoredPokemonService;
             _notificationBuilder = notificationBuilder;
             _notificationService = notificationService;
             _notificationContext = notificationContext;
-
-            var points = _options
-                .Value
-                .NotifyPolygon
-                .Select(x => new Point(x.Longitude, x.Latitude))
-                .ToArray();
-            _polygon = new Polygon(points);
-
-            var ignoredPokemonIds = _options
-                .Value
-                .IgnoredPokemon?
-                .Select(x => x.Id) ?? Enumerable.Empty<int>();
-            _ignoredPokemonIds = new HashSet<int>(ignoredPokemonIds);
         }
 
         public async Task<IEnumerable<PokemonEncounter>> GetEncountersAsync(int skip, int take, bool ascending)
@@ -66,15 +54,8 @@ namespace Knapcode.PoGoNotifications.Logic
 
         public async Task AddEncounterAsync(PokemonEncounter encounter)
         {
-            if (!IsInPolygon(encounter))
+            if (_ignoredPokemonService.IsIgnored(encounter))
             {
-                _logger.LogInformation("Encounter {encounterId} outside of the notify polygon.", encounter.EncounterId);
-                return;
-            }
-
-            if (IsIgnored(encounter))
-            {
-                _logger.LogInformation("Encounter {encounterId} (pokemon {pokemonId}) is ignored.", encounter.EncounterId, encounter.PokemonId);
                 return;
             }
 
@@ -113,11 +94,6 @@ namespace Knapcode.PoGoNotifications.Logic
             await _notificationService.SendNotificationAsync(notification);
         }
 
-        private bool IsIgnored(PokemonEncounter encounter)
-        {
-            return _ignoredPokemonIds.Contains(encounter.PokemonId);
-        }
-
         private bool IsDuplicateException(DbUpdateException exception)
         {
             var postgresException = exception.InnerException as PostgresException;
@@ -127,11 +103,6 @@ namespace Knapcode.PoGoNotifications.Logic
             }
 
             return postgresException.SqlState == "23505";
-        }
-
-        private bool IsInPolygon(PokemonEncounter encounter)
-        {
-            return _polygon.ContainsPoint(new Point(encounter.Longitude, encounter.Latitude));
         }
     }
 }

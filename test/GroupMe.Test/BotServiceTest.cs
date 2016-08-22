@@ -17,11 +17,11 @@ namespace Knapcode.GroupMe.Test
             using (var httpClient = new HttpClient())
             {
                 var target = new BotService(
-                    TestConfiguration.AccessToken,
+                    Configuration.AccessToken,
                     httpClient);
 
                 var messageService = new MessageService(
-                    TestConfiguration.AccessToken,
+                    Configuration.AccessToken,
                     httpClient);
 
                 var message = new BotMessage
@@ -30,18 +30,18 @@ namespace Knapcode.GroupMe.Test
                 };
 
                 // Act
-                await target.PostAsync(TestConfiguration.BotId, message, CancellationToken.None);
+                await target.PostAsync(Configuration.BotId, message, CancellationToken.None);
 
                 // Assert
                 var messages = await messageService.GetMessagesAsync(
-                    TestConfiguration.GroupId,
+                    Configuration.GroupId,
                     CancellationToken.None);
 
                 var output = messages.FirstOrDefault(x => x.Text == message.Text);
                 Assert.NotNull(output);
                 Assert.Equal("bot", output.SenderType);
-                Assert.Equal(TestConfiguration.BotName, output.Name);
-                Assert.Equal(TestConfiguration.GroupId, output.GroupId);
+                Assert.Equal(Configuration.BotName, output.Name);
+                Assert.Equal(Configuration.GroupId, output.GroupId);
                 Assert.Empty(output.Images);
                 Assert.Empty(output.Locations);
             }
@@ -54,11 +54,11 @@ namespace Knapcode.GroupMe.Test
             using (var httpClient = new HttpClient())
             {
                 var target = new BotService(
-                    TestConfiguration.AccessToken,
+                    Configuration.AccessToken,
                     httpClient);
 
                 var messageService = new MessageService(
-                    TestConfiguration.AccessToken,
+                    Configuration.AccessToken,
                     httpClient);
 
                 var message = new BotMessage
@@ -73,18 +73,18 @@ namespace Knapcode.GroupMe.Test
                 };
 
                 // Act
-                await target.PostAsync(TestConfiguration.BotId, message, CancellationToken.None);
+                await target.PostAsync(Configuration.BotId, message, CancellationToken.None);
 
                 // Assert
                 var messages = await messageService.GetMessagesAsync(
-                    TestConfiguration.GroupId,
+                    Configuration.GroupId,
                     CancellationToken.None);
 
                 var output = messages.FirstOrDefault(x => x.Text == message.Text);
                 Assert.NotNull(output);
                 Assert.Equal("bot", output.SenderType);
-                Assert.Equal(TestConfiguration.BotName, output.Name);
-                Assert.Equal(TestConfiguration.GroupId, output.GroupId);
+                Assert.Equal(Configuration.BotName, output.Name);
+                Assert.Equal(Configuration.GroupId, output.GroupId);
                 Assert.Empty(output.Images);
                 Assert.Equal(1, output.Locations.Count);
                 var location = output.Locations.First();
@@ -101,11 +101,11 @@ namespace Knapcode.GroupMe.Test
             using (var httpClient = new HttpClient())
             {
                 var target = new BotService(
-                    TestConfiguration.AccessToken,
+                    Configuration.AccessToken,
                     httpClient);
 
                 var messageService = new MessageService(
-                    TestConfiguration.AccessToken,
+                    Configuration.AccessToken,
                     httpClient);
 
                 var message = new BotMessage
@@ -118,18 +118,18 @@ namespace Knapcode.GroupMe.Test
                 };
 
                 // Act
-                await target.PostAsync(TestConfiguration.BotId, message, CancellationToken.None);
+                await target.PostAsync(Configuration.BotId, message, CancellationToken.None);
 
                 // Assert
                 var messages = await messageService.GetMessagesAsync(
-                    TestConfiguration.GroupId,
+                    Configuration.GroupId,
                     CancellationToken.None);
 
                 var output = messages.FirstOrDefault(x => x.Text == message.Text);
                 Assert.NotNull(output);
                 Assert.Equal("bot", output.SenderType);
-                Assert.Equal(TestConfiguration.BotName, output.Name);
-                Assert.Equal(TestConfiguration.GroupId, output.GroupId);
+                Assert.Equal(Configuration.BotName, output.Name);
+                Assert.Equal(Configuration.GroupId, output.GroupId);
                 Assert.Empty(output.Locations);
                 Assert.Equal(1, output.Images.Count);
                 var image = output.Images.First();

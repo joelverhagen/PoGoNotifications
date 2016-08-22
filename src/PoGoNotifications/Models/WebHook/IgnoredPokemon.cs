@@ -1,7 +1,8 @@
 ﻿namespace Knapcode.PoGoNotifications.Models
 {
-    public class PokemonId
+    public class IgnoredPokemon
     {
+        public bool Ignore { get; set; }
         public int Id { get; set; }
         public string Name { get; set; }
     }

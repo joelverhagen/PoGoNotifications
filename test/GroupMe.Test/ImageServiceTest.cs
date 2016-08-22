@@ -13,7 +13,7 @@ namespace Knapcode.GroupMe.Test
             // Arrange
             using (var httpClient = new HttpClient())
             {
-                var target = new ImageService(TestConfiguration.AccessToken, httpClient);
+                var target = new ImageService(Configuration.AccessToken, httpClient);
 
                 // Act
                 var image = await target.UploadImageUrlAsync(
@@ -35,7 +35,7 @@ namespace Knapcode.GroupMe.Test
             using (var httpClient = new HttpClient())
             using (var stream = await httpClient.GetStreamAsync("http://placehold.it/350x150"))
             {
-                var target = new ImageService(TestConfiguration.AccessToken, httpClient);
+                var target = new ImageService(Configuration.AccessToken, httpClient);
 
                 // Act
                 var image = await target.UploadStreamAsync(

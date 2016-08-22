@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Knapcode.GroupMe.Test
 {
-    public static class TestConfiguration
+    public static class Configuration
     {
         private static Lazy<IConfiguration> _configuration = new Lazy<IConfiguration>(() =>
         {
