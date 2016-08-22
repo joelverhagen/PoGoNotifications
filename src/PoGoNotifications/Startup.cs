@@ -66,6 +66,7 @@ namespace Knapcode.PoGoNotifications
             });
             
             services.AddTransient<INotificationService, GroupMeNotificationService>();
+            services.AddTransient<IIgnoredPokemonService, IgnoredPokemonService>();
             services.AddTransient<INotificationBuilder, NotificationBuilder>();
             services.AddTransient<IPokemonEncounterService, PokemonEncounterService>();
                 

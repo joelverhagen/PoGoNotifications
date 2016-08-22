@@ -13,7 +13,6 @@ namespace Knapcode.PoGoNotifications.Logic
     public class GroupMeNotificationService : INotificationService
     {
         private readonly IBotService _botService;
-        private readonly HttpClient _httpClient;
         private readonly IImageService _imageService;
         private readonly IOptions<NotificationOptions> _options;
 
