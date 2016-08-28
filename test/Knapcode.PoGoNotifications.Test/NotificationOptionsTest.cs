@@ -297,7 +297,7 @@ namespace Knapcode.PoGoNotifications.Test
             return Path.Combine(
                 GetRepositoryRoot(),
                 "src",
-                "PoGoNotifications");
+                "Knapcode.PoGoNotifications");
         }
 
         private static string GetRepositoryRoot()

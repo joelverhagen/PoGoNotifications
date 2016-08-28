@@ -10,15 +10,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PoGoNotifications", "src\PoGoNotifications\PoGoNotifications.xproj", "{731A123D-2535-49F0-9922-26AE48172574}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Knapcode.PoGoNotifications", "src\Knapcode.PoGoNotifications\Knapcode.PoGoNotifications.xproj", "{731A123D-2535-49F0-9922-26AE48172574}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{11D1A2AD-1E0C-4E3B-8499-902DA0CB9459}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PoGoNotifications.Test", "test\PoGoNotifications.Test\PoGoNotifications.Test.xproj", "{B743EB55-4BDB-4368-8295-909671EF237F}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Knapcode.PoGoNotifications.Test", "test\Knapcode.PoGoNotifications.Test\Knapcode.PoGoNotifications.Test.xproj", "{B743EB55-4BDB-4368-8295-909671EF237F}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "GroupMe", "src\GroupMe\GroupMe.xproj", "{5F9C2EBE-A79A-47B3-A0E7-67160551DE29}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Knapcode.GroupMe", "src\Knapcode.GroupMe\Knapcode.GroupMe.xproj", "{5F9C2EBE-A79A-47B3-A0E7-67160551DE29}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "GroupMe.Test", "test\GroupMe.Test\GroupMe.Test.xproj", "{35D3EE2E-5212-4EB3-8879-4A99E8961165}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Knapcode.GroupMe.Test", "test\Knapcode.GroupMe.Test\Knapcode.GroupMe.Test.xproj", "{35D3EE2E-5212-4EB3-8879-4A99E8961165}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

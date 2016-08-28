@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "GroupMe": {
+    "Knapcode.GroupMe": {
       "target": "project"
     },
     "xunit": "2.1.0",

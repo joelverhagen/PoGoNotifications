@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "PoGoNotifications": {
+    "Knapcode.PoGoNotifications": {
       "target": "project"
     },
     "Microsoft.EntityFrameworkCore.Design": {
