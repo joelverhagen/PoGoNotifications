@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Knapcode.PoGoNotifications.Models;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +19,12 @@ namespace Knapcode.PoGoNotifications.Logic
         private readonly INotificationBuilder _notificationBuilder;
         private readonly INotificationService _notificationService;
         private readonly IIgnoredPokemonService _ignoredPokemonService;
+        private readonly ICheckRepublicService _checkRepublicService;
 
         public PokemonEncounterService(
             ILogger<PokemonEncounterService> logger,
             IOptions<NotificationOptions> options,
+            ICheckRepublicService checkRepublicService,
             IIgnoredPokemonService ignoredPokemonService,
             INotificationBuilder notificationBuilder,
             INotificationService notificationService,
@@ -29,6 +32,7 @@ namespace Knapcode.PoGoNotifications.Logic
         {
             _logger = logger;
             _options = options;
+            _checkRepublicService = checkRepublicService;
             _ignoredPokemonService = ignoredPokemonService;
             _notificationBuilder = notificationBuilder;
             _notificationService = notificationService;
@@ -54,6 +58,8 @@ namespace Knapcode.PoGoNotifications.Logic
 
         public async Task AddEncounterAsync(PokemonEncounter encounter)
         {
+            await _checkRepublicService.SendHeartbeatAsync(CancellationToken.None);
+
             if (_ignoredPokemonService.IsIgnored(encounter))
             {
                 return;
