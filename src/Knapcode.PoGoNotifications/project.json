@@ -23,9 +23,7 @@
     "Npgsql.EntityFrameworkCore.PostgreSQL.Design": "1.0.1",
     "Npgsql.EntityFrameworkCore.PostgreSQL": "1.0.1",
     "Microsoft.AspNetCore.WebUtilities": "1.0.0",
-    "Knapcode.GroupMe": {
-      "target": "project"
-    },
+    "Knapcode.GroupMe": "0.1.0",
     "Knapcode.CheckRepublic.Client": "0.1.0"
   },
 
