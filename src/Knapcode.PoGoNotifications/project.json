@@ -55,6 +55,7 @@
   "publishOptions": {
     "include": [
       "appsettings.json",
+      "appsettings.secret.json",
       "web.config"
     ]
   },
