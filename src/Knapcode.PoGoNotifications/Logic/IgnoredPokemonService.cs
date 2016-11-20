@@ -40,7 +40,7 @@ namespace Knapcode.PoGoNotifications.Logic
             foreach (var areaOptions in options.Value.NotificationAreas)
             {
                 // Build the set of ignored pokemon IDs
-                foreach (var pokemon in areaOptions.Pokemon)
+                foreach (var pokemon in areaOptions.Pokemon ?? new IgnoredPokemon[0])
                 {
                     if (pokemon.Ignore)
                     {
